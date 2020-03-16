@@ -14,6 +14,7 @@ import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 @Service
 public class PlanetService {
@@ -25,12 +26,12 @@ public class PlanetService {
         this.repository = repository;
     }
 
-    public List<Planet> getPlanetList() {
-        return repository.findAll();
+    public List<PlanetDTO> getPlanetList() {
+        return repository.findAll().stream().map(PlanetDTO::map).collect(Collectors.toList());
     }
 
-    public Optional<Planet> getPlanet(String planetId) {
-        return repository.findByPlanetId(planetId);
+    public Optional<PlanetDTO> getPlanet(String planetId) {
+        return repository.findByPlanetId(planetId).map(PlanetDTO::map);
     }
 
     @Transactional
@@ -61,14 +62,17 @@ public class PlanetService {
         return success.get();
     }
 
-    public boolean assignCrew(String planetId, Crew crew) {
+    @Transactional
+    public boolean assignCrew(String planetId, Optional<Crew> crew) {
         AtomicBoolean success = new AtomicBoolean(false);
 
-        repository.findByPlanetId(planetId).ifPresent(planet -> {
-            planet.setCrew(crew);
-            repository.save(planet);
-            success.set(true);
-        });
+        crew.ifPresent(value ->
+                repository.findByPlanetId(planetId).ifPresent(planet -> {
+                    planet.setCrew(value);
+                    repository.save(planet);
+                    success.set(true);
+                })
+        );
 
         return success.get();
     }

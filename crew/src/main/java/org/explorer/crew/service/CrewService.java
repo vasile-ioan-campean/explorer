@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CrewService {
@@ -21,12 +22,12 @@ public class CrewService {
         this.repository = repository;
     }
 
-    public List<Crew> getCrewList() {
-        return repository.findAll();
+    public List<CrewDTO> getCrewList() {
+        return repository.findAll().stream().map(CrewDTO::map).collect(Collectors.toList());
     }
 
-    public Optional<Crew> getCrew(String crewId) {
-        return repository.findByCrewId(crewId);
+    public Optional<CrewDTO> getCrew(String crewId) {
+        return repository.findByCrewId(crewId).map(CrewDTO::map);
     }
 
     @Transactional
@@ -37,5 +38,9 @@ public class CrewService {
         crew.setRobots(data.getRobots());
 
         return repository.saveAndFlush(crew).getCrewId();
+    }
+
+    public Optional<Crew> getAssignedCrew(String crewId) {
+        return repository.findByCrewId(crewId);
     }
 }

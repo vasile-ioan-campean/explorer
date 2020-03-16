@@ -1,8 +1,6 @@
 package org.explorer.planet.api;
 
 import org.explorer.commandcenter.feign.api.CrewFeignClient;
-import org.explorer.commandcenter.model.Crew;
-import org.explorer.commandcenter.model.Planet;
 import org.explorer.commandcenter.model.dto.PlanetDTO;
 import org.explorer.planet.service.PlanetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +29,7 @@ public class PlanetController {
      * @return http response entity containing the json formatted list of planets
      */
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Planet>> getPlanetList() {
+    public ResponseEntity<List<PlanetDTO>> getPlanetList() {
         return ResponseEntity.ok(service.getPlanetList());
     }
 
@@ -43,7 +41,7 @@ public class PlanetController {
      *         failure: http response with status set as bad request
      */
     @GetMapping(value = "/{planetId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Planet> getPlanet(@PathVariable String planetId) {
+    public ResponseEntity<PlanetDTO> getPlanet(@PathVariable String planetId) {
         return service.getPlanet(planetId).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
@@ -70,8 +68,7 @@ public class PlanetController {
      */
     @PutMapping(value = "/{planetId}/crew", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> assignCrew(@PathVariable String planetId, @RequestParam  String crewId) {
-        Crew crew = crewFeignClient.getCrew(crewId).getBody();
-        return service.assignCrew(planetId, crew) ? ResponseEntity.ok().build() : ResponseEntity.unprocessableEntity().build();
+        return service.assignCrew(planetId, crewFeignClient.getAssignedCrew(crewId)) ? ResponseEntity.ok().build() : ResponseEntity.unprocessableEntity().build();
     }
 
     /**

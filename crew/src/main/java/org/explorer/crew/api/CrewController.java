@@ -11,6 +11,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController("/crew")
 public class CrewController implements CrewFeignClient {
@@ -28,7 +29,7 @@ public class CrewController implements CrewFeignClient {
      * @return http response entity containing the json formatted list of crews
      */
     @GetMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Crew>> getCrewList() {
+    public ResponseEntity<List<CrewDTO>> getCrewList() {
         return ResponseEntity.ok(service.getCrewList());
     }
 
@@ -40,7 +41,7 @@ public class CrewController implements CrewFeignClient {
      *         failure: http response with status set as bad request
      */
     @GetMapping(value = "/{crewId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Crew> getCrew(@PathVariable String crewId) {
+    public ResponseEntity<CrewDTO> getCrew(@PathVariable String crewId) {
         return service.getCrew(crewId).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.badRequest().build());
     }
 
@@ -53,5 +54,10 @@ public class CrewController implements CrewFeignClient {
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<String> addCrew(@ModelAttribute @NonNull CrewDTO data) {
         return ResponseEntity.ok(service.saveCrew(data));
+    }
+
+    @Override
+    public Optional<Crew> getAssignedCrew(String crewId) {
+        return service.getAssignedCrew(crewId);
     }
 }

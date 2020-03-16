@@ -16,6 +16,14 @@ public class Planet {
     @OneToOne
     private Crew crew;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getPlanetId() {
         return planetId;
     }
