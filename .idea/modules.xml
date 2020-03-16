@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/crew/crew.iml" filepath="$PROJECT_DIR$/crew/crew.iml" />
       <module fileurl="file://$PROJECT_DIR$/eureka/eureka.iml" filepath="$PROJECT_DIR$/eureka/eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/explorer.iml" filepath="$PROJECT_DIR$/explorer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gateway/gateway.iml" filepath="$PROJECT_DIR$/gateway/gateway.iml" />
       <module fileurl="file://$PROJECT_DIR$/planet/planet.iml" filepath="$PROJECT_DIR$/planet/planet.iml" />
     </modules>
   </component>

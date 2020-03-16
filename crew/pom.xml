@@ -12,12 +12,16 @@
     <artifactId>crew</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>crew</name>
-    <description>Crew related application</description>
 
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.explorer</groupId>
+            <artifactId>command-center</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

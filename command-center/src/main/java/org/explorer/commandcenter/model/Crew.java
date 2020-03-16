@@ -14,6 +14,14 @@ public class Crew {
     @ElementCollection
     private List<String> robots ;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getCrewId() {
         return crewId;
     }

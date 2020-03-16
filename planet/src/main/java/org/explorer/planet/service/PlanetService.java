@@ -3,9 +3,11 @@ package org.explorer.planet.service;
 import org.explorer.commandcenter.model.Crew;
 import org.explorer.commandcenter.model.Planet;
 import org.explorer.commandcenter.model.PlanetStatus;
+import org.explorer.commandcenter.model.dto.PlanetDTO;
 import org.explorer.planet.repository.PlanetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -31,16 +33,18 @@ public class PlanetService {
         return repository.findByPlanetId(planetId);
     }
 
-    public String savePlanet(String name, String image) {
+    @Transactional
+    public String savePlanet(PlanetDTO data) {
         Planet planet = new Planet();
-        planet.setName(name);
-        planet.setImage(image);
         planet.setPlanetId(UUID.randomUUID().toString());
+        planet.setName(data.getName());
+        planet.setImage(data.getImage());
         planet.setStatus(PlanetStatus.TO_DO);
 
         return repository.saveAndFlush(planet).getPlanetId();
     }
 
+    @Transactional
     public boolean updatePlanetStatus(String planetId, String status) {
         AtomicBoolean success = new AtomicBoolean(false);
 
@@ -62,7 +66,7 @@ public class PlanetService {
 
         repository.findByPlanetId(planetId).ifPresent(planet -> {
             planet.setCrew(crew);
-            repository.saveAndFlush(planet);
+            repository.save(planet);
             success.set(true);
         });
 

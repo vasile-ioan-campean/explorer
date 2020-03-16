@@ -25,6 +25,7 @@
         <module>planet</module>
         <module>crew</module>
         <module>eureka</module>
+        <module>gateway</module>
     </modules>
 
     <dependencies>
@@ -42,11 +43,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-feign</artifactId>
             <version>1.4.7.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.explorer</groupId>
-            <artifactId>command-center</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

@@ -1,24 +1,37 @@
 spring:
   application:
-    name: planet
+    name: gateway
   jpa:
     database: mysql
     generate-ddl: true
     show-sql: true
+    hibernate:
+      ddl-auto: update
   datasource:
     url: jdbc:mysql://localhost:3306/explorer?createDatabaseIfNotExist=true
     username: command-center
     password: galaxy
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-server:
-  port: 0
-
 eureka:
   client:
-    fetch-registry: true
     register-with-eureka: true
+    fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
   instance:
     hostname: localhost
+
+zuul:
+  ignored-services: "*"
+  routes:
+    planet-service:
+      path: /planet/**
+      serviceId: planet
+      strip-prefix: true
+    crew-service:
+      path: /crew/**
+      serviceId: crew
+      strip-prefix: true
+  host:
+    socket-timeout-millis: 30000

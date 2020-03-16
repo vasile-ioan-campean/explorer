@@ -8,24 +8,10 @@ server:
 eureka:
   client:
     register-with-eureka: false
-    fetch-registry: true
+    fetch-registry: false
     service-url:
       defaultZone: http://localhost:8761/eureka
   instance:
     hostname: localhost
   server:
     wait-time-in-ms-when-sync-empty: 0
-
-zuul:
-  ignored-services: "*"
-  routes:
-    planet-service:
-      path: /planet/**
-      serviceId: planet
-      strip-prefix: true
-    crew-service:
-      path: /crew/**
-      serviceId: crew
-      strip-prefix: true
-  host:
-    socket-timeout-millis: 30000

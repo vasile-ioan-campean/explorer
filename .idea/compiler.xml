@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="planet" />
         <module name="crew" />
+        <module name="gateway" />
         <module name="command-center" />
         <module name="eureka" />
       </profile>
@@ -16,8 +17,9 @@
       <module name="archive" target="1.8" />
       <module name="command-center" target="1.8" />
       <module name="crew" target="1.8" />
-      <module name="eureka" target="1.5" />
+      <module name="eureka" target="1.8" />
       <module name="explorer" target="1.8" />
+      <module name="gateway" target="1.8" />
       <module name="planet" target="1.8" />
     </bytecodeTargetLevel>
   </component>
@@ -27,6 +29,7 @@
       <module name="command-center" options="-parameters" />
       <module name="crew" options="-parameters" />
       <module name="eureka" options="-parameters" />
+      <module name="gateway" options="-parameters" />
       <module name="planet" options="-parameters" />
     </option>
   </component>

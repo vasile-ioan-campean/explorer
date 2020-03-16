@@ -3,6 +3,7 @@ package org.explorer.planet.api;
 import org.explorer.commandcenter.feign.api.CrewFeignClient;
 import org.explorer.commandcenter.model.Crew;
 import org.explorer.commandcenter.model.Planet;
+import org.explorer.commandcenter.model.dto.PlanetDTO;
 import org.explorer.planet.service.PlanetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -77,10 +78,10 @@ public class PlanetController {
      * Create a new planet
      *
      * @param data form data containing the name and image for the new planet
-     * @return
+     * @return the planetId for the created planet
      */
     @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> addPlanet(@ModelAttribute @NonNull Planet data) {
-        return ResponseEntity.ok(service.savePlanet(data.getName(), data.getImage()));
+    public ResponseEntity<String> addPlanet(@ModelAttribute @NonNull PlanetDTO data) {
+        return ResponseEntity.ok(service.savePlanet(data));
     }
 }
