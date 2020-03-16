@@ -9,6 +9,3 @@ target/
 *.iws
 *.iml
 *.ipr
-/.idea/
-/explorer.iml
-**/gateway.iml
