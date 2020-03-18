@@ -20,6 +20,6 @@ public enum PlanetStatus {
     }
 
     public static PlanetStatus find(String value) {
-        return Arrays.stream(values()).filter(e -> e.getValue().equalsIgnoreCase(value)).findAny().orElseThrow(NoSuchElementException::new);
+        return Arrays.stream(values()).filter(e -> e.getValue().equalsIgnoreCase(value)).findAny().orElseThrow(() -> new NoSuchElementException(String.format("No valid status found for value=%s", value)));
     }
 }

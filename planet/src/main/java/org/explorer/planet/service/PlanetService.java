@@ -1,5 +1,6 @@
 package org.explorer.planet.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.explorer.commandcenter.model.Crew;
 import org.explorer.commandcenter.model.Planet;
 import org.explorer.commandcenter.model.PlanetStatus;
@@ -17,6 +18,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class PlanetService {
 
     private PlanetRepository repository;
@@ -47,6 +49,7 @@ public class PlanetService {
 
     @Transactional
     public boolean updatePlanetStatus(String planetId, String status) {
+        log.info(String.format("Changing status for planet=%s to %s", planetId, status));
         AtomicBoolean success = new AtomicBoolean(false);
 
         repository.findByPlanetId(planetId).ifPresent(planet -> {
@@ -55,7 +58,7 @@ public class PlanetService {
                 repository.saveAndFlush(planet);
                 success.set(true);
             } catch (NoSuchElementException e) {
-              System.out.println(e.getLocalizedMessage());
+                log.error(e.getLocalizedMessage());
             }
         });
 
