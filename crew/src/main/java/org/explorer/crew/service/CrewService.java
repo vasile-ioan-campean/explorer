@@ -1,16 +1,15 @@
 package org.explorer.crew.service;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 import org.explorer.commandcenter.model.Crew;
 import org.explorer.commandcenter.model.dto.CrewDTO;
 import org.explorer.crew.repository.CrewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Service
 public class CrewService {
@@ -32,10 +31,11 @@ public class CrewService {
 
     @Transactional
     public String saveCrew(CrewDTO data) {
-        Crew crew = new Crew();
-        crew.setCrewId(UUID.randomUUID().toString());
-        crew.setCaptain(data.getCaptain());
-        crew.setRobots(data.getRobots());
+        var crew = Crew.builder()
+                .crewId(UUID.randomUUID().toString())
+                .captain(data.getCaptain())
+                .robots(data.getRobots())
+                .build();
 
         return repository.saveAndFlush(crew).getCrewId();
     }

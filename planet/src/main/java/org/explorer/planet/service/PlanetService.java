@@ -1,32 +1,27 @@
 package org.explorer.planet.service;
 
-import lombok.extern.slf4j.Slf4j;
-import org.explorer.commandcenter.model.Crew;
-import org.explorer.commandcenter.model.Planet;
-import org.explorer.commandcenter.model.PlanetStatus;
-import org.explorer.commandcenter.model.dto.PlanetDTO;
-import org.explorer.planet.repository.PlanetRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.explorer.commandcenter.model.Crew;
+import org.explorer.commandcenter.model.Planet;
+import org.explorer.commandcenter.model.PlanetStatus;
+import org.explorer.commandcenter.model.dto.PlanetDTO;
+import org.explorer.planet.repository.PlanetRepository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class PlanetService {
 
-    private PlanetRepository repository;
-
-    @Autowired
-    public PlanetService(PlanetRepository repository) {
-        this.repository = repository;
-    }
+    private final PlanetRepository repository;
 
     public List<PlanetDTO> getPlanetList() {
         return repository.findAll().stream().map(PlanetDTO::map).collect(Collectors.toList());
@@ -38,11 +33,12 @@ public class PlanetService {
 
     @Transactional
     public String savePlanet(PlanetDTO data) {
-        Planet planet = new Planet();
-        planet.setPlanetId(UUID.randomUUID().toString());
-        planet.setName(data.getName());
-        planet.setImage(data.getImage());
-        planet.setStatus(PlanetStatus.TO_DO);
+        var planet = Planet.builder()
+                .planetId(UUID.randomUUID().toString())
+                .name(data.getName())
+                .image(data.getImage())
+                .status(PlanetStatus.TO_DO)
+                .build();
 
         return repository.saveAndFlush(planet).getPlanetId();
     }

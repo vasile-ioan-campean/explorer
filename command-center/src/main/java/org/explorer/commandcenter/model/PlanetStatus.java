@@ -9,9 +9,9 @@ public enum PlanetStatus {
     TO_DO("TODO"),
     EN_ROUTE("En route");
 
-    private String value;
+    private final String value;
 
-    PlanetStatus(String value){
+    PlanetStatus(String value) {
         this.value = value;
     }
 
@@ -20,6 +20,7 @@ public enum PlanetStatus {
     }
 
     public static PlanetStatus find(String value) {
-        return Arrays.stream(values()).filter(e -> e.getValue().equalsIgnoreCase(value)).findAny().orElseThrow(() -> new NoSuchElementException(String.format("No valid status found for value=%s", value)));
+        return Arrays.stream(values()).filter(e -> e.getValue().equalsIgnoreCase(value)).findAny()
+                .orElseThrow(() -> new NoSuchElementException(String.format("No valid status found for value=%s", value)));
     }
 }

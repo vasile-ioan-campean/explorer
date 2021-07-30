@@ -1,10 +1,24 @@
 package org.explorer.commandcenter.model;
 
-import javax.persistence.*;
 import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Crew {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -12,37 +26,5 @@ public class Crew {
     private String crewId;
     private String captain;
     @ElementCollection
-    private List<String> robots ;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getCrewId() {
-        return crewId;
-    }
-
-    public void setCrewId(String crewId) {
-        this.crewId = crewId;
-    }
-
-    public String getCaptain() {
-        return captain;
-    }
-
-    public void setCaptain(String captain) {
-        this.captain = captain;
-    }
-
-    public List<String> getRobots() {
-        return robots;
-    }
-
-    public void setRobots(List<String> robots) {
-        this.robots = robots;
-    }
+    private List<String> robots;
 }
